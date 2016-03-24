@@ -1,5 +1,8 @@
 var path    = require('path');
 var webpack = require('webpack');
+var outputDir = path.join(__dirname, 'dist');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+//var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry:  [
@@ -8,7 +11,7 @@ module.exports = {
     './client'
   ],
   output: {
-    path:     path.join(__dirname, 'dist'),
+    path:     outputDir,
     filename: 'bundle.js'
   },
   resolve: {
@@ -21,14 +24,16 @@ module.exports = {
         test:    /\.jsx?$/,
         exclude: /node_modules/,
         loaders: ['react-hot', 'babel-loader']
-      }
+      },
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
     ]
   },
   plugins: [
+    new ExtractTextPlugin('bundle.css'),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
-  devtool: 'inline-source-map',
+
   devServer: {
     hot: true,
     proxy: {
