@@ -1,7 +1,7 @@
 import express                   from 'express';
 import React                     from 'react';
 import { renderToString }        from 'react-dom/server'
-import { RoutingContext, match } from 'react-router';
+import { RouterContext, match } from 'react-router';
 import createLocation            from 'history/lib/createLocation';
 import routes                    from 'routes';
 const app = express();
@@ -15,7 +15,7 @@ app.use((req, res) => {
     if (!renderProps) return res.status(404).end('Not found.');
 
     const InitialComponent = (
-      <RoutingContext {...renderProps} />
+      <RouterContext {...renderProps} />
     );
     const componentHTML = renderToString(InitialComponent);
     const HTML = `
